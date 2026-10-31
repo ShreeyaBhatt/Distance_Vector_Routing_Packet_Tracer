@@ -47,7 +47,7 @@ All routers are `Router-PT` and all switches are `Switch-PT`. The routers are co
 | Router1 | 10.0.0.0, 11.0.0.0, 192.168.2.0 |
 | Router2 | 11.0.0.0, 192.168.3.0           |
 
-Each router also has `version 2` and `no auto-summary` set under `router rip`, and its configuration is saved to the startup configuration.
+Each router also has `version 2` and `no auto-summary` set under `router rip`, and its LAN port is a passive interface, so RIP advertises the LAN but sends no updates to the PCs. Every router and switch uses its device name as its hostname, and its configuration is saved to the startup configuration.
 
 ## Test the routing
 
