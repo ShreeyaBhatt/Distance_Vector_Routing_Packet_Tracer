@@ -51,21 +51,25 @@ Each router also has `version 2` and `no auto-summary` set under `router rip`, a
 
 ## Simulations
 
-The file includes four saved scenarios. Choose one from the scenario list at the bottom right.
+The file includes five saved scenarios. Choose one from the scenario list at the bottom right.
 
-| Scenario         | Pings                     | What it shows                                        |
-|------------------|---------------------------|------------------------------------------------------|
-| 1 Same LAN       | PC0 to PC1                | The switch forwards it and no router is involved     |
-| 2 LAN 1 to LAN 2 | PC0 to PC2                | A RIP route with metric 1, through Router0 and Router1 |
-| 3 LAN 1 to LAN 3 | PC0 to PC4, PC4 to PC0    | RIP routes with metric 2, through all three routers  |
-| 4 All LANs       | PC1 to PC3, PC3 to PC5, PC5 to PC1 | Every router has learned every network      |
+| Scenario         | Pings                              | Route                                 |
+|------------------|------------------------------------|---------------------------------------|
+| 1 Same LAN       | PC0 to PC1, PC2 to PC3, PC4 to PC5 | The switch only, no router            |
+| 2 LAN 1 to LAN 2 | PC0 to PC2 and back                | Router0 and Router1, metric 1         |
+| 3 LAN 2 to LAN 3 | PC2 to PC4 and back                | Router1 and Router2, metric 1         |
+| 4 LAN 1 to LAN 3 | PC0 to PC4 and back                | All three routers, metric 2           |
+| 5 All LANs       | PC1 to PC3, PC3 to PC5, PC5 to PC1 | Every router pair, metric 1 or 2      |
 
-To watch one run:
+To run one:
 
 1. Click **Fast Forward Time** a few times so RIP converges.
 2. Choose a scenario.
 3. Switch to **Simulation** mode. The event filters are set to show only RIP and ICMP.
-4. Press **Play**, or **Capture/Forward** to step through one event at a time. Click an envelope to inspect a packet.
+4. Click **Fire** next to a ping in the PDU list at the bottom right.
+5. Press **Play**, or **Capture/Forward** to step through one event at a time. Click an envelope to inspect a packet.
+
+The PDU list should show **Successful**. If the first attempt fails while ARP resolves, fire it again.
 
 RIP updates appear only on the serial links, because the LAN ports are passive interfaces.
 
