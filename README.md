@@ -1,6 +1,6 @@
 # Distance Vector Routing in Cisco Packet Tracer
 
-A three-router network that uses RIP to show distance vector routing. Each router starts out knowing only its directly connected networks and learns the rest from its neighbours, with no static routes.
+A three-router network that uses RIP version 2 to show distance vector routing. Each router starts out knowing only its directly connected networks and learns the rest from its neighbours, with no static routes.
 
 Built for the Computer Networks course, Semester V.
 
@@ -47,29 +47,13 @@ All routers are `Router-PT` and all switches are `Switch-PT`. The routers are co
 | Router1 | 10.0.0.0, 11.0.0.0, 192.168.2.0 |
 | Router2 | 11.0.0.0, 192.168.3.0           |
 
-## Known issues in the saved file
-
-1. **RIP version.** The routers run the default `router rip` configuration, which is RIPv1, not RIPv2.
-2. **Configuration not saved to NVRAM.** All three routers have an empty startup configuration, so restarting a router wipes its configuration.
-
-To fix both, run these commands in the CLI tab of each router, starting from the `Router>` prompt, then save the file in Packet Tracer:
-
-```
-enable
-configure terminal
-router rip
-version 2
-no auto-summary
-end
-copy running-config startup-config
-
-```
-
-The blank line accepts the default destination filename for the copy.
+Each router also has `version 2` and `no auto-summary` set under `router rip`, and its configuration is saved to the startup configuration.
 
 ## Test the routing
 
 Wait about a minute for RIP to converge, then run these checks.
+
+The file includes a saved test PDU from PC0 to PC4, which crosses all three routers. To send it, open the PDU list at the bottom right and fire the entry for PC0 to PC4.
 
 From the command prompt on PC0, ping a host in each of the other LANs:
 
