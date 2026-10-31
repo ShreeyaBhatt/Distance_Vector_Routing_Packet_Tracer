@@ -49,11 +49,44 @@ All routers are `Router-PT` and all switches are `Switch-PT`. The routers are co
 
 Each router also has `version 2` and `no auto-summary` set under `router rip`, and its LAN port is a passive interface, so RIP advertises the LAN but sends no updates to the PCs. Every router and switch uses its device name as its hostname, and its configuration is saved to the startup configuration.
 
+## Simulations
+
+The file includes four saved scenarios. Choose one from the scenario list at the bottom right.
+
+| Scenario         | Pings                     | What it shows                                        |
+|------------------|---------------------------|------------------------------------------------------|
+| 1 Same LAN       | PC0 to PC1                | The switch forwards it and no router is involved     |
+| 2 LAN 1 to LAN 2 | PC0 to PC2                | A RIP route with metric 1, through Router0 and Router1 |
+| 3 LAN 1 to LAN 3 | PC0 to PC4, PC4 to PC0    | RIP routes with metric 2, through all three routers  |
+| 4 All LANs       | PC1 to PC3, PC3 to PC5, PC5 to PC1 | Every router has learned every network      |
+
+To watch one run:
+
+1. Click **Fast Forward Time** a few times so RIP converges.
+2. Choose a scenario.
+3. Switch to **Simulation** mode. The event filters are set to show only RIP and ICMP.
+4. Press **Play**, or **Capture/Forward** to step through one event at a time. Click an envelope to inspect a packet.
+
+RIP updates appear only on the serial links, because the LAN ports are passive interfaces.
+
+### Simulate a failure
+
+To watch RIP react to a lost network, run these commands on Router2:
+
+```
+enable
+configure terminal
+interface FastEthernet0/0
+shutdown
+```
+
+Router2 tells its neighbours that LAN 3 is gone. After a short wait, `show ip route` on Router0 should no longer show 192.168.3.0/24 as reachable, and pings from PC0 to 192.168.3.2 should fail.
+
+Run `no shutdown` on the same interface to restore it. Don't save the file while the interface is shut down.
+
 ## Test the routing
 
 Wait about a minute for RIP to converge, then run these checks.
-
-The file includes a saved test PDU from PC0 to PC4, which crosses all three routers. To send it, open the PDU list at the bottom right and fire the entry for PC0 to PC4.
 
 From the command prompt on PC0, ping a host in each of the other LANs:
 
